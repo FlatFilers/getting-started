@@ -12,6 +12,7 @@
   "type": "module",
   "license": "ISC",
   "dependencies": {
+    "flatfile": "^3.3.6",
     "@flatfile/api": "^1.4.0",
     "@flatfile/listener": "^0.1.1",
     "@flatfile/plugin-record-hook": "^0.0.5",

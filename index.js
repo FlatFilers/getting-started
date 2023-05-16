@@ -2,7 +2,7 @@
  * Get your Secret key at: https://platform.flatfile.com/developers and then
  * uncomment this line after setting the API Key value.
  */
-process.env.FLATFILE_API_KEY = "YOUR SECRET KEY"
+process.env.token = "YOUR SECRET KEY"
 
 /**
  * Write a basic Flatfile event subscriber. You can do nearly anything

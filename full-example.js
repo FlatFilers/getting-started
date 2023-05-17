@@ -37,17 +37,29 @@ export default function(listener) {
   /** 
    * Part 3 example 
    */
+  
+  const https = require('https');
 
   listener.on('action:triggered', async (event) => {
-    const webhookReceiver = '<Webhook URL>';
-    // copy your https://webhook.site URL for testing
-    const res = await fetch(webhookReceiver, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(event.payload)
-    })
+    
+    new Promise((resolve, reject) => {
+      const req = https.request({
+        method: 'POST',
+        protocol: 'https:',
+        hostname: 'webhook.site',
+        // copy your https://webhook.site path for testing
+        path: '/<COPY_PATH_HERE>',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const body = JSON.stringify({ event }, null, 2);
+      req.write(body);
+      req.on('response', (res) => { resolve(); });
+      req.on('error', (err) => { reject(err); });
+      req.end();
+    });
+
   })
 
 }

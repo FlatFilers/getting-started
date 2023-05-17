@@ -1,4 +1,3 @@
-
 import { recordHook } from '@flatfile/plugin-record-hook'
 
 export default function(listener) {
@@ -8,7 +7,7 @@ export default function(listener) {
    */
 
   listener.on('**', (event) => {
-    console.log('-> My event', event.topic)
+    console.log(`-> My event listener received an event: ${event.topic}`)
   })
 
 

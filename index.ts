@@ -1,7 +1,5 @@
 import { recordHook } from "@flatfile/plugin-record-hook";
 import api from "@flatfile/api"
-import fetch from "node-fetch";
-import axios from "axios";
 
 export default function (listener) {
   /**
@@ -33,26 +31,6 @@ export default function (listener) {
 
       return record;
     })
-  );
-
-  listener.on(
-    "commit:created",
-    { context: { sheetSlug: "contacts" } },
-    async (event) => {
-      const { sheetId } = event.context;
-      const records = (await event.data).records;
-
-      records.forEach((record) => {
-        record.values.lastName.value = "Rock";
-
-        Object.keys(record.values).forEach((key) => {
-          if (record.values[key].value === null) {
-            delete record.values[key];
-          }
-        });
-      });
-      await api.records.update(sheetId, records);
-    }
   );
 
   /**

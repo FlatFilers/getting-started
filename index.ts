@@ -8,10 +8,11 @@ export default function (listener) {
    * Part 1 example
    */
 
-  listener.on('records:*', async (event) => {
-    const data = await event.data
-    console.log(`-> Records ${event.topic} ${event.context.sheetSlug} = ${data.records.length}`)
-  })
+  listener.on("**", (event) => {
+    console.log(
+      `-> My event listener received an event: ${JSON.stringify(event)}`
+    );
+  });
 
   /**
    * Part 2 example
@@ -58,27 +59,44 @@ export default function (listener) {
    * Part 3 example
    */
 
-  listener.on("action:triggered", async (event) => {
-    const webhookReceiver = "<WEBHOOK URL>";
-    // copy your https://webhook.site URL for testing
-    const res = await fetch(webhookReceiver, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ...event.payload, method: "fetch" }),
-    });
-  });
+  listener.filter({ job: 'workbook:submitAction' }, (configure) => {
+    configure.on('job:ready', async (event) => {
+      const { jobId } = event.context;
+      try {
+        await api.jobs.ack(jobId, {
+          info: 'Starting job to submit action to webhook.site',
+          progress: 10
+        });
+        const webhookReceiver = '<Webhook URL>';
+        // copy your https://webhook.site URL for testing
+        await fetch(webhookReceiver, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ ...event.payload, method: "fetch" }),
+        })
 
-  listener.on("action:triggered", async (event) => {
-    const webhookReceiver = "<WEBHOOK URL>";
-    // copy your https://webhook.site URL for testing
-    const res = await axios(webhookReceiver, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: JSON.stringify({ ...event.payload, method: "axios" }),
-    });
-  });
+        await api.jobs.complete(jobId, {
+          info: 'Data successfully submitted to webbook.site.',
+          outcome:{
+            message:"Data was successfully submitted to webbook.site. Go check it out!"
+          }
+        });
+      }
+      catch (error) {
+        console.log(`webhook.site[error]: ${JSON.stringify(error, null, 2)}`);
+
+        await api.jobs.fail(jobId, {
+          info: "Missing webhook url.", 
+          outcome:{
+            message:"This job failed probably because it couldn't find the webhook.site url."
+          }
+        });
+      }
+
+
+    })
+  })
+
 }

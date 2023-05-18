@@ -1,4 +1,5 @@
 import { recordHook } from "@flatfile/plugin-record-hook";
+import api from "@flatfile/api"
 import fetch from "node-fetch";
 import axios from "axios";
 
@@ -7,11 +8,10 @@ export default function (listener) {
    * Part 1 example
    */
 
-  listener.on("**", (event) => {
-    console.log(
-      `-> My event listener received an event: ${JSON.stringify(event)}`
-    );
-  });
+  listener.on('records:*', async (event) => {
+    const data = await event.data
+    console.log(`-> Records ${event.topic} ${event.context.sheetSlug} = ${data.records.length}`)
+  })
 
   /**
    * Part 2 example
@@ -27,7 +27,6 @@ export default function (listener) {
       }
 
       if (!validEmailAddress.test(String(record.get("email")))) {
-        console.log("got email");
         record.addError("email", "Invalid email address");
       }
 
@@ -51,7 +50,7 @@ export default function (listener) {
           }
         });
       });
-      await event.api.records.update(sheetId, records);
+      await api.records.update(sheetId, records);
     }
   );
 

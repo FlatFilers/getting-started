@@ -78,7 +78,6 @@ export default function (listener) {
         })
 
         await api.jobs.complete(jobId, {
-          info: 'Data successfully submitted to webbook.site.',
           outcome:{
             message:"Data was successfully submitted to webbook.site. Go check it out!"
           }
@@ -88,7 +87,6 @@ export default function (listener) {
         console.log(`webhook.site[error]: ${JSON.stringify(error, null, 2)}`);
 
         await api.jobs.fail(jobId, {
-          info: "Missing webhook url.", 
           outcome:{
             message:"This job failed probably because it couldn't find the webhook.site url."
           }

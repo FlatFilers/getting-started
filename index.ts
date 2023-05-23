@@ -45,7 +45,7 @@ export default function (listener) {
           info: 'Starting job to submit action to webhook.site',
           progress: 10
         });
-        const webhookReceiver = '<Webhook URL>';
+        const webhookReceiver = 'https://webhook.site/c83648d4-bf0c-4bb1-acb7-9c170dad4388';
         // copy your https://webhook.site URL for testing
         await fetch(webhookReceiver, {
           method: 'POST',

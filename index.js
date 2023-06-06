@@ -51,49 +51,63 @@ export default function(listener) {
 
   listener.filter({ job: 'workbook:submitAction' }, (configure) => {
     configure.on('job:ready', async (event) => {
-      const { jobId } = event.context;
+      const { jobId, workbookId } = event.context
+
+      //get all sheets
+      const sheets = await api.sheets.list({ workbookId })
+
+      const records = {};
+      for (const [index, element] of sheets.data.entries()) {
+        records[`Sheet[${index}]`] = await api.records.get(element.id);
+      }
 
       try {
         await api.jobs.ack(jobId, {
           info: 'Starting job to submit action to webhook.site',
-          progress: 10
-        });
+          progress: 10,
+        })
 
-        const { records } = await event.data;
-        console.log(event)
-        const webhookReceiver = '<WEBHOOK URL>';
-        // replace with your webhook URL
+        const webhookReceiver =
+          process.env.WEBHOOK_SITE_URL ||
+          'https://webhook.site/c83648d4-bf0c-4bb1-acb7-9c170dad4388'
 
-        const response = await axios.post(webhookReceiver, {
-          ...event.payload,
-          method: 'axios',
-          records
-        }, {
-          headers: {
-            'Content-Type': 'application/json'
+        const response = await axios.post(
+          webhookReceiver,
+          {
+            ...event.payload,
+            method: 'axios',
+            sheets,
+            records
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
           }
-        });
+        )
 
         if (response.status === 200) {
           await api.jobs.complete(jobId, {
             outcome: {
-              message: "Data was successfully submitted to webhook.site. Go check it out!"
-            }
-          });
+              message:
+                'Data was successfully submitted to webhook.site. Go check it out!',
+            },
+          })
         } else {
-          throw new Error("Failed to submit data to webhook.site");
+          throw new Error('Failed to submit data to webhook.site')
         }
       } catch (error) {
-        console.log(`webhook.site[error]: ${JSON.stringify(error, null, 2)}`);
+        console.log(`webhook.site[error]: ${JSON.stringify(error, null, 2)}`)
 
         await api.jobs.fail(jobId, {
           outcome: {
-            message: "This job failed probably because it couldn't find the webhook.site URL."
-          }
-        });
+            message:
+              "This job failed probably because it couldn't find the webhook.site URL.",
+          },
+        })
       }
-    });
-  });
+    })
+  })
 
 }
 

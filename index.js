@@ -5,7 +5,7 @@
 
 import { recordHook } from '@flatfile/plugin-record-hook'
 import api from '@flatfile/api'
-const axios = require('axios');
+import axios from 'axios';
 
 /**
  * Write a basic Flatfile event subscriber. You can do nearly anything

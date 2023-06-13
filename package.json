@@ -1,6 +1,6 @@
 {
   "name": "gettingstarted",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,9 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@flatfile/api": "^1.5.1",
-    "@flatfile/listener": "^0.3.3",
-    "@flatfile/plugin-record-hook": "^0.1.4",
+    "@flatfile/api": "^1.5.8",
+    "@flatfile/listener": "^0.3.6",
+    "@flatfile/plugin-record-hook": "^0.1.7",
     "axios": "^1.4.0",
     "flatfile": "^3.4.11"
   },

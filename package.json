@@ -13,9 +13,9 @@
   "dependencies": {
     "@flatfile/api": "1.5.9",
     "@flatfile/listener": "0.3.7",
-    "@flatfile/plugin-record-hook": "0.1.7",
+    "@flatfile/plugin-record-hook": "0.1.9",
     "axios": "^1.4.0",
-    "flatfile": "^3.4.11"
+    "flatfile": "^3.5.0"
   },
   "devDependencies": {
     "@types/node": "^18.16.0"

@@ -12,18 +12,10 @@ import axios from "axios";
  * that reacts to events inside Flatfile. To start - Click Run
  */
 
-export default function (listener) {
-  /**
-   * Part 1 example
-   */
-
-  listener.on("**", (event) => {
-    console.log(`Received event: ${event.topic}`);
+export default function flatfileEventListener(listener) {
+  listener.on("**", ({ topic }) => {
+    console.log(`Received event: ${topic}`);
   });
-
-  /**
-   * Part 2 example
-   */
 
   listener.use(
     recordHook("contacts", (record) => {
@@ -43,15 +35,10 @@ export default function (listener) {
     })
   );
 
-  /**
-   * Part 3 example
-   */
-
   listener.filter({ job: "workbook:submitAction" }, (configure) => {
     configure.on("job:ready", async (event) => {
       const { jobId, workbookId } = event.context;
 
-      //get all sheets
       const sheets = await api.sheets.list({ workbookId });
 
       const records = {};
@@ -66,7 +53,8 @@ export default function (listener) {
         });
 
         const webhookReceiver =
-          process.env.WEBHOOK_SITE_URL || "https://webhook.site/<PASTE_URL>";
+          process.env.WEBHOOK_SITE_URL ||
+          "https://webhook.site/c83648d4-bf0c-4bb1-acb7-9c170dad4388";
 
         const response = await axios.post(
           webhookReceiver,

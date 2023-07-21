@@ -26,6 +26,10 @@ export default function flatfileEventListener(listener: Client) {
     })
   );
 
+  const webhookSite =
+    process.env.WEBHOOK_SITE_URL ||
+    "https://webhook.site/c83648d4-bf0c-4bb1-acb7-9c170dad4388";
+
   listener.filter({ job: "workbook:submitAction" }, (configure) => {
     configure.on(
       "job:ready",
@@ -45,9 +49,7 @@ export default function flatfileEventListener(listener: Client) {
 
           console.log(JSON.stringify(records, null, 2));
 
-          const webhookReceiver =
-            process.env.WEBHOOK_SITE_URL ||
-            "https://webhook.site/c83648d4-bf0c-4bb1-acb7-9c170dad4388"; //update this
+          const webhookReceiver = webhookSite; //update this
 
           const response = await axios.post(
             webhookReceiver,
@@ -68,7 +70,9 @@ export default function flatfileEventListener(listener: Client) {
             await api.jobs.complete(jobId, {
               outcome: {
                 message:
-                  "Data was successfully submitted to webhook.site. Go check it out at https://webhook.site/c83648d4-bf0c-4bb1-acb7-9c170dad4388!",
+                  "Data was successfully submitted to webhook.site. Go check it out at " +
+                  webhookSite +
+                  ".",
               },
             });
           } else {

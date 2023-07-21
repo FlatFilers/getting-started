@@ -80,7 +80,7 @@ export default function (listener) {
     );
   });
   //when the workbook action is clicked
-  listener.filter({ job: "workbook:submitAction" }, (configure) => {
+  listener.filter({ job: "workbook:submitActionFg" }, (configure) => {
     configure.on(
       "job:ready",
       async ({ context: { jobId, workbookId }, payload }) => {
@@ -98,8 +98,8 @@ export default function (listener) {
           });
 
           const webhookReceiver =
-            process.env.WEBHOOK_SITE_URL || "https://webhook.site/<PASTE_URL>";
-          // Replace <PASTE_URL> with the actual webhook URL
+            process.env.WEBHOOK_SITE_URL ||
+            "https://webhook.site/c83648d4-bf0c-4bb1-acb7-9c170dad4388"; //update this
 
           const response = await axios.post(
             webhookReceiver,
@@ -120,7 +120,9 @@ export default function (listener) {
             await api.jobs.complete(jobId, {
               outcome: {
                 message:
-                  "Data was successfully submitted to webhook.site. Go check it out!",
+                  "Data was successfully submitted to webhook.site. Go check it out at " +
+                  webhookReceiver +
+                  ".",
               },
             });
           } else {

@@ -54,7 +54,7 @@ export default function flatfileEventListener(listener) {
 
         const webhookReceiver =
           process.env.WEBHOOK_SITE_URL ||
-          "https://webhook.site/c83648d4-bf0c-4bb1-acb7-9c170dad4388";
+          "https://webhook.site/c83648d4-bf0c-4bb1-acb7-9c170dad4388"; //update this
 
         const response = await axios.post(
           webhookReceiver,
@@ -75,7 +75,9 @@ export default function flatfileEventListener(listener) {
           await api.jobs.complete(jobId, {
             outcome: {
               message:
-                "Data was successfully submitted to webhook.site. Go check it out!",
+                "Data was successfully submitted to webhook.site. Go check it out at " +
+                webhookReceiver +
+                ".",
             },
           });
         } else {

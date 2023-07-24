@@ -1,11 +1,12 @@
+import { FlatfileListener, FlatfileEvent, Client } from "@flatfile/listener";
 import api from "@flatfile/api";
 
-export default function flatfileEventListener(listener) {
+export default function flatfileEventListener(listener: Client) {
   //configure space initially
-  listener.filter({ job: "space:configure" }, (configure) => {
+  listener.filter({ job: "space:configure" }, (configure: FlatfileListener) => {
     configure.on(
       "job:ready",
-      async ({ context: { spaceId, environmentId, jobId } }) => {
+      async ({ context: { spaceId, environmentId, jobId } }: FlatfileEvent) => {
         await api.jobs.ack(jobId, {
           info: "Gettin started.",
           progress: 10,
@@ -75,7 +76,7 @@ export default function flatfileEventListener(listener) {
   //you can also do this during configuration
   listener.on(
     "space:created",
-    async ({ context: { spaceId, environmentId } }) => {
+    async ({ context: { spaceId, environmentId } }: FlatfileEvent) => {
       //const updateSpace = await flatfile.spaces.update(spaceId, {});
 
       const updateSpace = await api.spaces.update(spaceId, {

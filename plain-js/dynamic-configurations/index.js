@@ -88,4 +88,10 @@ export default function (listener) {
       }
     );
   });
+
+  listener.filter({ sheet: "SheetName" }, (configure) => {
+    listener.on("commit:created", async (event) => {
+      //make changes after cells in a Sheet have been updated
+    });
+  });
 }

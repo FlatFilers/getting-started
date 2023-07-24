@@ -89,4 +89,10 @@ export default function (listener: Client) {
       }
     );
   });
+
+  listener.filter({ sheet: "SheetName" }, (configure: FlatfileListener) => {
+    listener.on("commit:created", async (event: FlatfileEvent) => {
+      //make changes after cells in a Sheet have been updated
+    });
+  });
 }

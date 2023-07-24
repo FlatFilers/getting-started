@@ -89,9 +89,10 @@ export default function (listener) {
     );
   });
 
-  listener.filter({ sheet: "SheetName" }, (configure) => {
+  listener.filter({ sheet: "Contacts" }, (configure) => {
     listener.on("commit:created", async (event) => {
       //make changes after cells in a Sheet have been updated
+      console.log("made it here");
     });
   });
 }

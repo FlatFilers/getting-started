@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@flatfile/api": "1.5.16",
+    "@flatfile/api": "1.5.19",
     "@flatfile/listener": "0.3.11",
     "@flatfile/plugin-record-hook": "0.1.11",
     "axios": "^1.4.0",

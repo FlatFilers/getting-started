@@ -1,22 +1,21 @@
 /**
- * Get your Secret key at: https://platform.flatfile.com/developers and then
- * paste it in Tools > Secrets > FLATFILE_API_KEY.
+ * See all code examples: https://github.com/FlatFilers/flatfile-docs-kitchen-sink
  */
 
 import { recordHook } from "@flatfile/plugin-record-hook";
 import api from "@flatfile/api";
 import axios from "axios";
 
-/**
- * Write a basic Flatfile event subscriber. You can do nearly anything
- * that reacts to events inside Flatfile. To start - Click Run
- */
-
 export default function flatfileEventListener(listener) {
+  /**
+   * Part 1 example
+   */
   listener.on("**", ({ topic }) => {
     console.log(`Received event: ${topic}`);
   });
-
+  /**
+   * Part 3 example
+   */
   listener.use(
     recordHook("contacts", (record) => {
       const value = record.get("firstName");
@@ -34,7 +33,9 @@ export default function flatfileEventListener(listener) {
       return record;
     })
   );
-
+  /**
+   * Part 3 example
+   */
   listener.filter({ job: "workbook:submitAction" }, (configure) => {
     configure.on("job:ready", async (event) => {
       const { jobId, workbookId } = event.context;

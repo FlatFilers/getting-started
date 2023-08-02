@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <addresses>
+    <address active="true">
+      <street>Ano nuevo</street>
+      <country>
+        <name>Spain</name>
+        <iso>ES</iso>
+      </country>
+      <zip format="5">12345</zip>
+    </address>
+    <address active="false">
+      <street>Foo</street>
+      <country>
+        <name>Spain</name>
+        <iso>ES</iso>
+      </country>
+      <zip format="5">12345</zip>
+    </address>
+  </addresses>
+</root>

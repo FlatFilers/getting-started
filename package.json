@@ -12,7 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@flatfile/api": "^1.5.13",
-    "@flatfile/listener": "^0.3.10",
+    "@flatfile/listener": "^0.3.11",
     "@flatfile/plugin-record-hook": "^0.1.11",
     "axios": "^1.4.0",
     "flatfile": "^3.5.0"

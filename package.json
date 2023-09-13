@@ -4,18 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "flatfile develop index.js",
-    "deploy": "flatfile deploy index.js"
+    "dev": "flatfile develop typescript/index.ts",
+    "deploy": "flatfile deploy typescript/index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@flatfile/api": "1.5.19",
-    "@flatfile/listener": "0.3.11",
-    "@flatfile/plugin-record-hook": "0.1.11",
-    "axios": "^1.4.0",
-    "flatfile": "^3.5.8"
+    "@flatfile/api": "1.5.24",
+    "@flatfile/listener": "0.3.15",
+    "@flatfile/plugin-record-hook": "1.1.1",
+    "axios": "^1.5.0",
+    "flatfile": "^3.5.9"
   },
   "devDependencies": {
     "@types/node": "^18.16.0"

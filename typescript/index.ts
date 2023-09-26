@@ -1,29 +1,39 @@
 /**
- * See all code examples: https://github.com/FlatFilers/flatfile-docs-kitchen-sink
+ * This code is used in Flatfile's Beginner Tutorial
+ * https://flatfile.com/docs/quickstart
+ *
+ * To see all of Flatfile's code examples go to: https://github.com/FlatFilers/flatfile-docs-kitchen-sink
  */
 
 import { recordHook, FlatfileRecord } from "@flatfile/plugin-record-hook";
-import { FlatfileEvent, Client } from "@flatfile/listener";
+import { Client, FlatfileEvent } from "@flatfile/listener";
 import api from "@flatfile/api";
 import axios from "axios";
 
+// Part 1: Create a Workbook (https://flatfile.com/docs/quickstart/meet-the-workbook)
+// If you haven't completed step one in, you can run `npm run create-workbook`
+
+const webhookReceiver = process.env.WEBHOOK_SITE_URL || "YOUR_WEBHOOK_URL"; // TODO: Update this with your webhook.site URL for Part 4
+
 export default function flatfileEventListener(listener: Client) {
-  /**
-   * Part 1 example
-   */
-  listener.on("**", ({ topic }: FlatfileEvent) => {
-    console.log(`Received event: ${topic}`);
+  // Part 2: Setup a listener (https://flatfile.com/docs/quickstart/meet-the-listener)
+  listener.on("**", (event: FlatfileEvent) => {
+    // Log all events
+    console.log(`Received event: ${event.topic}`);
   });
-  /**
-   * Part 2 example
-   */
+
+  // Part 3: Transform and validate (https://flatfile.com/docs/quickstart/add-data-transformation)
   listener.use(
     recordHook("contacts", (record: FlatfileRecord) => {
+      // Validate and transform a Record's first name
       const value = record.get("firstName");
       if (typeof value === "string") {
         record.set("firstName", value.toLowerCase());
+      } else {
+        record.addError("firstName", "Invalid first name");
       }
 
+      // Validate a Record's email address
       const email = record.get("email") as string;
       const validEmailAddress = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!validEmailAddress.test(email)) {
@@ -34,35 +44,31 @@ export default function flatfileEventListener(listener: Client) {
       return record;
     })
   );
-  /**
-   * Part 3 example
-   */
+
+  // Part 4: Configure a submit Action (https://flatfile.com/docs/quickstart/submit-action)
   listener
-    .filter({ job: "workbook:submitAction" })
+    .filter({ job: "workbook:submitActionFg" })
     .on("job:ready", async (event: FlatfileEvent) => {
-      const {
-        context: { jobId, workbookId },
-        payload,
-      } = event;
-      const { data: sheets } = await api.sheets.list({ workbookId });
+      const { context, payload } = event;
+      const { jobId, workbookId } = context;
 
-      const records: { [name: string]: any } = {};
-      for (const [index, element] of sheets.entries()) {
-        records[`Sheet[${index}]`] = await api.records.get(element.id);
-      }
-
+      // Acknowledge the job
       try {
         await api.jobs.ack(jobId, {
           info: "Starting job to submit action to webhook.site",
           progress: 10,
         });
 
+        // Collect all Sheet and Record data from the Workbook
+        const { data: sheets } = await api.sheets.list({ workbookId });
+        const records: { [name: string]: any } = {};
+        for (const [index, element] of sheets.entries()) {
+          records[`Sheet[${index}]`] = await api.records.get(element.id);
+        }
+
         console.log(JSON.stringify(records, null, 2));
 
-        const webhookReceiver =
-          process.env.WEBHOOK_SITE_URL ||
-          "https://webhook.site/c83648d4-bf0c-4bb1-acb7-9c170dad4388"; //update this
-
+        // Send the data to our webhook.site URL
         const response = await axios.post(
           webhookReceiver,
           {
@@ -78,25 +84,23 @@ export default function flatfileEventListener(listener: Client) {
           }
         );
 
-        if (response.status === 200) {
-          await api.jobs.complete(jobId, {
-            outcome: {
-              message:
-                "Data was successfully submitted to webhook.site. Go check it out at " +
-                webhookReceiver +
-                ".",
-            },
-          });
-        } else {
+        // If the call fails throw an error
+        if (response.status !== 200) {
           throw new Error("Failed to submit data to webhook.site");
         }
-      } catch (error) {
-        console.log(`webhook.site[error]: ${JSON.stringify(error, null, 2)}`);
 
+        // Otherwise, complete the job
+        await api.jobs.complete(jobId, {
+          outcome: {
+            message: `Data was successfully submitted to Webhook.site. Go check it out at ${webhookReceiver}.`,
+          },
+        });
+      } catch (error) {
+        // If an error is thrown, fail the job
+        console.log(`webhook.site[error]: ${JSON.stringify(error, null, 2)}`);
         await api.jobs.fail(jobId, {
           outcome: {
-            message:
-              "This job failed probably because it couldn't find the webhook.site URL.",
+            message: `This job failed. Check your ${webhookReceiver}.`,
           },
         });
       }

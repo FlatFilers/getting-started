@@ -118,8 +118,9 @@ export default function flatfileEventListener(listener: Client) {
         // Rename "records" to "$data" and add a parent "records" object
         const modifiedOutput = {
           $data: finalRecords.records,
-          validData, // validData only contains valid records
-          data: validData, // data also contains valid records
+          validData: validData, // data only contains valid records
+          data: validData, // data only contains valid records
+          allData: finalRecords.records,
         };
 
         // Now, modifiedOutput will have the desired structure

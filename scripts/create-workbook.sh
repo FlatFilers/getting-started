@@ -32,7 +32,7 @@ curl --request POST \
   ],
   "actions": [
     {
-      "operation": "submitActionFg",
+      "operation": "submitAction",
       "mode": "foreground",
       "label": "Submit",
       "description": "Submit data to webhook.site",

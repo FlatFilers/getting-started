@@ -41,7 +41,7 @@ export default function (listener) {
             ],
             actions: [
               {
-                operation: "submitActionFg",
+                operation: "submitAction",
                 mode: "foreground",
                 label: "Submit foreground",
                 description: "Submit data to webhook.site",
@@ -79,7 +79,7 @@ export default function (listener) {
     );
   });
 
-  listener.filter({ job: "workbook:submitActionFg" }, (configure) => {
+  listener.filter({ job: "workbook:submitAction" }, (configure) => {
     configure.on("job:ready", async ({ context: { jobId } }) => {
       try {
         await api.jobs.ack(jobId, {

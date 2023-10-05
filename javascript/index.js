@@ -46,7 +46,7 @@ export default function flatfileEventListener(listener) {
 
   // Part 4: Configure a submit Action (https://flatfile.com/docs/quickstart/submit-action)
   listener
-    .filter({ job: "workbook:submitActionFg" })
+    .filter({ job: "workbook:submitAction" })
     .on("job:ready", async (event) => {
       const { context, payload } = event;
       const { jobId, workbookId } = context;

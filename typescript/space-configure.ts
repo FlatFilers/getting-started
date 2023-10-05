@@ -64,7 +64,7 @@ export default function (listener: Client) {
           ],
           actions: [
             {
-              operation: "submitActionFg",
+              operation: "submitAction",
               mode: "foreground",
               label: "Submit foreground",
               description: "Submit data to webhook.site",
@@ -101,7 +101,7 @@ export default function (listener: Client) {
     });
 
   listener
-    .filter({ job: "workbook:submitActionFg" })
+    .filter({ job: "workbook:submitAction" })
     .on("job:ready", async (event: FlatfileEvent) => {
       const { workbookId, jobId } = event.context;
 

@@ -69,10 +69,14 @@ export default function flatfileEventListener(listener: Client) {
 
         // Transform the records into the desired format
         const transformedRecords = {};
+        const validData = [];
+        const data = [];
+
         for (const sheetName in records) {
           if (records.hasOwnProperty(sheetName)) {
             const sheet = records[sheetName];
-            const transformedData = {};
+            const transformedData = [];
+            let sequenceNumber = 0;
 
             for (const record of sheet.data.records) {
               const recordValues = {};
@@ -83,10 +87,25 @@ export default function flatfileEventListener(listener: Client) {
                 }
               }
 
-              transformedData[record.id] = recordValues;
+              const isRecordValid = record.valid; // Assuming valid is a boolean
+
+              transformedData.push({
+                sequence: sequenceNumber++,
+                valid: isRecordValid, // Add the valid property
+                data: {
+                  ...recordValues, // Spread the existing recordValues
+                },
+              });
+
+              // Add to validData if valid
+              if (isRecordValid) {
+                validData.push({ ...recordValues });
+              }
             }
 
-            transformedRecords[sheetName] = transformedData;
+            transformedRecords[sheetName] = {
+              records: transformedData,
+            };
           }
         }
 
@@ -96,9 +115,16 @@ export default function flatfileEventListener(listener: Client) {
             ? transformedRecords["Sheet[0]"]
             : transformedRecords;
 
-        // Now, finalRecords will have the desired structure
+        // Rename "records" to "$data" and add a parent "records" object
+        const modifiedOutput = {
+          $data: finalRecords.records,
+          validData, // validData only contains valid records
+          data: validData, // data also contains valid records
+        };
 
-        console.log(JSON.stringify(finalRecords, null, 2));
+        // Now, modifiedOutput will have the desired structure
+
+        console.log(JSON.stringify(modifiedOutput, null, 2));
 
         // Send the data to our webhook.site URL
         const response = await axios.post(
@@ -107,7 +133,7 @@ export default function flatfileEventListener(listener: Client) {
             ...payload,
             method: "axios",
             sheets,
-            records: finalRecords, // Use the transformed data
+            records: modifiedOutput, // Use the transformed data
           },
           {
             headers: {

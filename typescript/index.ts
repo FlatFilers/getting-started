@@ -47,7 +47,7 @@ export default function flatfileEventListener(listener: Client) {
 
   // Part 4: Configure a submit Action (https://flatfile.com/docs/quickstart/submit-action)
   listener
-    .filter({ job: "workbook:submitActionFg" })
+    .filter({ job: "workbook:submitAction" })
     .on("job:ready", async (event: FlatfileEvent) => {
       const { context, payload } = event;
       const { jobId, workbookId } = context;
@@ -61,12 +61,44 @@ export default function flatfileEventListener(listener: Client) {
 
         // Collect all Sheet and Record data from the Workbook
         const { data: sheets } = await api.sheets.list({ workbookId });
-        const records: { [name: string]: any } = {};
+        const records = {};
+
         for (const [index, element] of sheets.entries()) {
           records[`Sheet[${index}]`] = await api.records.get(element.id);
         }
 
-        console.log(JSON.stringify(records, null, 2));
+        // Transform the records into the desired format
+        const transformedRecords = {};
+        for (const sheetName in records) {
+          if (records.hasOwnProperty(sheetName)) {
+            const sheet = records[sheetName];
+            const transformedData = {};
+
+            for (const record of sheet.data.records) {
+              const recordValues = {};
+
+              for (const key in record.values) {
+                if (record.values.hasOwnProperty(key)) {
+                  recordValues[key] = record.values[key].value;
+                }
+              }
+
+              transformedData[record.id] = recordValues;
+            }
+
+            transformedRecords[sheetName] = transformedData;
+          }
+        }
+
+        // If there is only one sheet, remove the "Sheet[0]" layer
+        const finalRecords =
+          Object.keys(transformedRecords).length === 1
+            ? transformedRecords["Sheet[0]"]
+            : transformedRecords;
+
+        // Now, finalRecords will have the desired structure
+
+        console.log(JSON.stringify(finalRecords, null, 2));
 
         // Send the data to our webhook.site URL
         const response = await axios.post(
@@ -75,7 +107,7 @@ export default function flatfileEventListener(listener: Client) {
             ...payload,
             method: "axios",
             sheets,
-            records,
+            records: finalRecords, // Use the transformed data
           },
           {
             headers: {
@@ -84,7 +116,7 @@ export default function flatfileEventListener(listener: Client) {
           }
         );
 
-        // If the call fails throw an error
+        // If the call fails, throw an error
         if (response.status !== 200) {
           throw new Error("Failed to submit data to webhook.site");
         }

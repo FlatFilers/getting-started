@@ -50,7 +50,7 @@ export default function flatfileEventListener(listener: Client) {
     .filter({ job: "workbook:submitAction" })
     .on("job:ready", async (event: FlatfileEvent) => {
       const { context, payload } = event;
-      const { jobId, workbookId } = context;
+      const { jobId, workbookId, actorId } = context;
 
       // Acknowledge the job
       try {
@@ -115,12 +115,21 @@ export default function flatfileEventListener(listener: Client) {
             ? transformedRecords["Sheet[0]"]
             : transformedRecords;
 
+        // Get user information
+        const endUser = await api.users.get(actorId);
+
+        // Add user info to $meta
+        const $meta = {
+          endUser,
+        };
+
         // Rename "records" to "$data" and add a parent "records" object
         const modifiedOutput = {
           $data: finalRecords.records,
           validData: validData, // data only contains valid records
           data: validData, // data only contains valid records
           allData: finalRecords.records,
+          $meta, // Add the $meta object with endUser
         };
 
         // Now, modifiedOutput will have the desired structure

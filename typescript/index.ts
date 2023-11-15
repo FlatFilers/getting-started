@@ -5,9 +5,9 @@
  * To see all of Flatfile's code examples go to: https://github.com/FlatFilers/flatfile-docs-kitchen-sink
  */
 
-import { recordHook, FlatfileRecord } from "@flatfile/plugin-record-hook";
-import { Client, FlatfileEvent } from "@flatfile/listener";
 import api from "@flatfile/api";
+import { Client, FlatfileEvent } from "@flatfile/listener";
+import { bulkRecordHook } from "@flatfile/plugin-record-hook";
 import axios from "axios";
 
 // Part 1: Create a Workbook (https://flatfile.com/docs/quickstart/meet-the-workbook)
@@ -24,24 +24,26 @@ export default function flatfileEventListener(listener: Client) {
 
   // Part 3: Transform and validate (https://flatfile.com/docs/quickstart/add-data-transformation)
   listener.use(
-    recordHook("contacts", (record: FlatfileRecord) => {
-      // Validate and transform a Record's first name
-      const value = record.get("firstName");
-      if (typeof value === "string") {
-        record.set("firstName", value.toLowerCase());
-      } else {
-        record.addError("firstName", "Invalid first name");
-      }
+    bulkRecordHook("contacts", (records) => {
+      records.map((record) => {
+        // Validate and transform a Record's first name
+        const value = record.get("firstName");
+        if (typeof value === "string") {
+          record.set("firstName", value.toLowerCase());
+        } else {
+          record.addError("firstName", "Invalid first name");
+        }
 
-      // Validate a Record's email address
-      const email = record.get("email") as string;
-      const validEmailAddress = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!validEmailAddress.test(email)) {
-        console.log("Invalid email address");
-        record.addError("email", "Invalid email address");
-      }
+        // Validate a Record's email address
+        const email = record.get("email") as string;
+        const validEmailAddress = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!validEmailAddress.test(email)) {
+          console.log("Invalid email address");
+          record.addError("email", "Invalid email address");
+        }
 
-      return record;
+        return record;
+      });
     })
   );
 

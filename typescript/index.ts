@@ -47,7 +47,7 @@ export default function flatfileEventListener(listener: Client) {
 
   // Part 4: Configure a submit Action (https://flatfile.com/docs/quickstart/submit-action)
   listener
-    .filter({ job: "workbook:submitAction" })
+    .filter({ job: "workbook:string" })
     .on("job:ready", async (event: FlatfileEvent) => {
       const { context, payload } = event;
       const { jobId, workbookId } = context;
@@ -58,6 +58,12 @@ export default function flatfileEventListener(listener: Client) {
           info: "Starting job to submit action to webhook.site",
           progress: 10,
         });
+
+        //get the input data
+        const job = await api.jobs.get(jobId);
+        const priority = job.data.input["string"];
+        console.log("priority");
+        console.log(priority);
 
         // Collect all Sheet and Record data from the Workbook
         const { data: sheets } = await api.sheets.list({ workbookId });
@@ -76,6 +82,7 @@ export default function flatfileEventListener(listener: Client) {
             method: "axios",
             sheets,
             records,
+            priority,
           },
           {
             headers: {

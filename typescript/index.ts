@@ -1,6 +1,6 @@
 /**
- * This code is used in Flatfile's Beginner Tutorial
- * https://flatfile.com/docs/quickstart
+ * This code is used in Flatfile's Custom App Tutorial
+ * https://flatfile.com/docs/apps/custom
  *
  * To see all of Flatfile's code examples go to: https://github.com/FlatFilers/flatfile-docs-kitchen-sink
  */
@@ -11,19 +11,18 @@ import { Client, FlatfileEvent } from "@flatfile/listener";
 import api from "@flatfile/api";
 import axios from "axios";
 
-// Part 1: Create a Workbook (https://flatfile.com/docs/quickstart/meet-the-workbook)
-// If you haven't completed step one in, you can run `npm run create-workbook`
-
-const webhookReceiver = process.env.WEBHOOK_SITE_URL || "YOUR_WEBHOOK_URL"; // TODO: Update this with your webhook.site URL for Part 4
+// TODO: Update this with your webhook.site URL for Part 4
+const webhookReceiver = process.env.WEBHOOK_SITE_URL || "YOUR_WEBHOOK_URL";
 
 export default function flatfileEventListener(listener: Client) {
-  // Part 2: Setup a listener (https://flatfile.com/docs/quickstart/meet-the-listener)
+  // Part 1: Setup a listener (https://flatfile.com/docs/apps/custom/meet-the-listener)
   listener.on("**", (event: FlatfileEvent) => {
     // Log all events
     console.log(`Received event: ${event.topic}`);
   });
 
   listener.namespace(["space:red"], (red: FlatfileListener) => {
+    // Part 2: Configure a Space (https://flatfile.com/docs/apps/custom)
     red
       .filter({ job: "space:configure" })
       .on("job:ready", async (event: FlatfileEvent) => {
@@ -138,7 +137,7 @@ export default function flatfileEventListener(listener: Client) {
         }
       });
 
-    // Part 3: Transform and validate (https://flatfile.com/docs/quickstart/add-data-transformation)
+    // Part 3: Transform and validate (https://flatfile.com/docs/apps/custom/add-data-transformation)
     red.use(
       recordHook("contacts", (record: FlatfileRecord) => {
         // Validate and transform a Record's first name
@@ -161,7 +160,7 @@ export default function flatfileEventListener(listener: Client) {
       })
     );
 
-    // Part 4: Configure a submit Action (https://flatfile.com/docs/quickstart/submit-action)
+    // Part 4: Configure a submit Action (https://flatfile.com/docs/apps/custom/submit-action)
     red
       .filter({ job: "workbook:submitAction" })
       .on("job:ready", async (event: FlatfileEvent) => {

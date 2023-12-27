@@ -79,6 +79,23 @@ export default function flatfileEventListener(listener) {
                 "---\n",
             });
 
+            await api.spaces.update(spaceId, {
+              environmentId,
+              metadata: {
+                theme: {
+                  root: {
+                    primaryColor: "red",
+                  },
+                  sidebar: {
+                    backgroundColor: "red",
+                    textColor: "white",
+                    activeTextColor: "midnightblue",
+                  },
+                  // See reference for all possible variables
+                },
+              },
+            });
+
             await api.jobs.complete(jobId, {
               outcome: {
                 message: "Your Space was created.",

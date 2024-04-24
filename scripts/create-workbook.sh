@@ -7,6 +7,7 @@ curl --request POST \
   --data '{
   "name": "My First Workbook",
   "labels": ["simple-demo"],
+  "namespace": "red",
   "sheets": [
     {
       "name": "Contacts",

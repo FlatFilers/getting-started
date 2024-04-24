@@ -18,7 +18,6 @@ Your `.env` file should look similar to this:
 ```
 FLATFILE_ENVIRONMENT_ID=us_env_1234
 FLATFILE_API_KEY=sk_1234
-WEBHOOK_SITE_URL=https://webhook.site/1234
 ```
 
 ## Stepping through the tutorial
@@ -27,9 +26,9 @@ After you set up your environment variables, the first step of the tutorial, cre
 
 The remainder of the tutorial can be stepped through in either typescript or javascript.
 
-If using javascript, run `npx flatfile develop javascript/index.js` to start a local listener.
+If using javascript, run `npm run dev:js` to start a local listener.
 
-If using typescript, run `npx flatfile develop typescript/index.ts` to start a local listener.
+If using typescript, run `npm run dev:ts` to start a local listener.
 
 Guidance and context for these steps can be found in our [Beginner Tutorial Documentation](https://flatfile.com/docs/quickstart).
 

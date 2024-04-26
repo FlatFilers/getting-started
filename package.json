@@ -2,21 +2,25 @@
   "name": "gettingstarted",
   "version": "1.1.0",
   "description": "",
+  "engines": {
+    "node": ">=16"
+  },
   "main": "index.js",
   "scripts": {
-    "dev": "flatfile develop typescript/index.ts",
-    "deploy": "flatfile deploy typescript/index.ts",
+    "dev:ts": "flatfile develop typescript/index.ts",
+    "dev:js": "flatfile develop javascript/index.js",
+    "deploy:ts": "flatfile deploy typescript/index.ts",
+    "deploy:js": "flatfile deploy javascript/index.js",
     "create-workbook": "bash ./scripts/create-workbook.sh"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@flatfile/api": "1.5.24",
-    "@flatfile/listener": "0.3.15",
-    "@flatfile/plugin-record-hook": "1.1.1",
-    "axios": "^1.5.0",
-    "flatfile": "^3.5.9"
+    "@flatfile/api": "latest",
+    "@flatfile/listener": "latest",
+    "@flatfile/plugin-record-hook": "latest",
+    "flatfile": "latest"
   },
   "devDependencies": {
     "@types/node": "^18.16.0"

@@ -5,16 +5,16 @@
  * To see all of Flatfile's code examples go to: https://github.com/FlatFilers/flatfile-docs-kitchen-sink
  */
 
-import { FlatfileListener } from "@flatfile/listener";
-import { recordHook, FlatfileRecord } from "@flatfile/plugin-record-hook";
-import { Client, FlatfileEvent } from "@flatfile/listener";
+import type { FlatfileEvent, FlatfileListener } from "@flatfile/listener";
+import type { FlatfileRecord } from "@flatfile/plugin-record-hook";
+
 import api from "@flatfile/api";
-import axios from "axios";
+import { recordHook } from "@flatfile/plugin-record-hook";
 
 // TODO: Update this with your webhook.site URL for Part 4
-const webhookReceiver = process.env.WEBHOOK_SITE_URL || "YOUR_WEBHOOK_URL";
+const webhookReceiver = "https://webhook.site/1234";
 
-export default function flatfileEventListener(listener: Client) {
+export default function (listener: FlatfileListener) {
   // Part 1: Setup a listener (https://flatfile.com/docs/apps/custom/meet-the-listener)
   listener.on("**", (event: FlatfileEvent) => {
     // Log all events
@@ -23,9 +23,10 @@ export default function flatfileEventListener(listener: Client) {
 
   listener.namespace(["space:red"], (red: FlatfileListener) => {
     // Part 2: Configure a Space (https://flatfile.com/docs/apps/custom)
-    red
-      .filter({ job: "space:configure" })
-      .on("job:ready", async (event: FlatfileEvent) => {
+    red.on(
+      "job:ready",
+      { job: "space:configure" },
+      async (event: FlatfileEvent) => {
         const { spaceId, environmentId, jobId } = event.context;
         try {
           await api.jobs.ack(jobId, {
@@ -42,27 +43,6 @@ export default function flatfileEventListener(listener: Client) {
               {
                 name: "Contacts",
                 slug: "contacts",
-                fields: [
-                  {
-                    key: "firstName",
-                    type: "string",
-                    label: "First Name",
-                  },
-                  {
-                    key: "lastName",
-                    type: "string",
-                    label: "Last Name",
-                  },
-                  {
-                    key: "email",
-                    type: "string",
-                    label: "Email",
-                  },
-                ],
-              },
-              {
-                name: "Sheet 2",
-                slug: "sheet2",
                 fields: [
                   {
                     key: "firstName",
@@ -135,7 +115,8 @@ export default function flatfileEventListener(listener: Client) {
             },
           });
         }
-      });
+      }
+    );
 
     // Part 3: Transform and validate (https://flatfile.com/docs/apps/custom/add-data-transformation)
     red.use(
@@ -161,11 +142,12 @@ export default function flatfileEventListener(listener: Client) {
     );
 
     // Part 4: Configure a submit Action (https://flatfile.com/docs/apps/custom/submit-action)
-    red
-      .filter({ job: "workbook:submitAction" })
-      .on("job:ready", async (event: FlatfileEvent) => {
-        const { context, payload } = event;
-        const { jobId, workbookId } = context;
+    red.on(
+      "job:ready",
+      { job: "workbook:submitAction" },
+      async (event: FlatfileEvent) => {
+        const { payload } = event;
+        const { jobId, workbookId } = event.context;
 
         // Acknowledge the job
         try {
@@ -173,12 +155,6 @@ export default function flatfileEventListener(listener: Client) {
             info: "Starting job to submit action to webhook.site",
             progress: 10,
           });
-
-          //get the input data
-          const job = await api.jobs.get(jobId);
-          const priority = job.data.input["string"];
-          console.log("priority");
-          console.log(priority);
 
           // Collect all Sheet and Record data from the Workbook
           const { data: sheets } = await api.sheets.list({ workbookId });
@@ -190,23 +166,19 @@ export default function flatfileEventListener(listener: Client) {
           console.log(JSON.stringify(records, null, 2));
 
           // Send the data to our webhook.site URL
-          const response = await axios.post(
-            webhookReceiver,
-            {
+          const response = await fetch(webhookReceiver, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
               ...payload,
-              method: "axios",
+              method: "fetch",
               sheets,
               records,
-              priority,
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
+            }),
+          });
 
-          // If the call fails throw an error
           if (response.status !== 200) {
             throw new Error("Failed to submit data to webhook.site");
           }
@@ -226,6 +198,7 @@ export default function flatfileEventListener(listener: Client) {
             },
           });
         }
-      });
+      }
+    );
   });
 }

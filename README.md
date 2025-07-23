@@ -1,7 +1,43 @@
-# ⚠️ LEGACY REPOSITORY
+# Guide Listeners Code
 
-This repository is now **legacy** and is no longer maintained.
+This repository contains example code for Flatfile listeners with both TypeScript and JavaScript versions.
 
-You can find the original code in the [`legacy branch`](https://github.com/FlatFilers/getting-started/tree/legacy). We're working on a new updated Getting Started Guide with LLM documentation that can act as a starting point for your Flatfile codebase.
+## Structure
 
-For the latest resources, please visit the [Flatfile documentation](https://flatfile.com/docs).
+Each example is organized in folders like `01-first-listener/` with:
+
+- `typescript/` - Contains the TypeScript source code
+- `javascript/` - Contains the generated JavaScript code (auto-generated)
+
+## Scripts
+
+### Generate JavaScript from TypeScript
+
+Use the `scripts/generate-js.ts` script to automatically generate JavaScript versions from TypeScript code:
+
+```bash
+# Generate JavaScript for all projects (only if files have changed)
+bun scripts/generate-js.ts
+
+# Force regenerate all JavaScript files
+bun scripts/generate-js.ts --force
+
+# Generate JavaScript for a specific project
+bun scripts/generate-js.ts 01-first-listener
+
+# Show help
+bun scripts/generate-js.ts --help
+```
+
+The script will:
+
+1. Find all folders containing a `typescript/` subdirectory
+2. Compile TypeScript files to JavaScript (excluding `node_modules`)
+3. Copy `package.json`, `package-lock.json`, and `.env.example` to the JavaScript folder
+4. Format the generated JavaScript files (if biome is available)
+5. Only recompile files that are newer than their JavaScript counterparts (unless `--force` is used)
+
+## Requirements
+
+- [Bun](https://bun.sh/) - JavaScript runtime and package manager
+- TypeScript projects should have their dependencies installed in their respective `typescript/` folders

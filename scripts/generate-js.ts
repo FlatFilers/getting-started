@@ -123,13 +123,13 @@ function compileTypeScript(projectFolder: string, files: string[]): void {
     // Clean up temp tsconfig
     execSync(`rm ${tempTsConfig}`, { stdio: "inherit" });
 
-    // Format the output files if biome is available
+    // Format the output files with 2-space indentation
     try {
       console.log(`Formatting generated JavaScript files in ${projectFolder}...`);
-      execSync(`bunx biome check --write ${javascriptDir}/ 2>/dev/null || echo "Biome not available, skipping formatting"`, { stdio: "inherit" });
+      execSync(`cd ${javascriptDir} && bunx prettier --write --tab-width 2 --use-tabs false "*.js"`, { stdio: "inherit" });
       console.log(`Formatting completed for ${projectFolder}.`);
     } catch {
-      console.log("Skipping formatting (biome not available)");
+      console.log("Skipping formatting (prettier not available)");
     }
   } catch (error) {
     console.error(`Compilation failed for ${projectFolder}:`, error);

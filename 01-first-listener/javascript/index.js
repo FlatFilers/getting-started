@@ -1,4 +1,5 @@
 import api from "@flatfile/api";
+
 export default function (listener) {
     // Configure the space when it's created
     listener.on("job:ready", { job: "space:configure" }, async (event) => {

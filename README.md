@@ -4,7 +4,7 @@ This repository contains companion code for the [Flatfile Coding Tutorial](https
 
 ## How This Repository Works
 
-This repository is designed to be used alongside the [Flatfile Coding Tutorial](https://flatfile.com/docs/coding-tutorial/overview). The tutorial progressively walks you through building a complete listener, and this repository provides the corresponding code for each step.
+This repository is designed to be used alongside the tutorial. The tutorial progressively walks you through building a complete listener, and this repository provides the corresponding code for each step.
 
 Each folder represents a different stage in the tutorial:
 
@@ -19,7 +19,7 @@ Each folder represents a different stage in the tutorial:
 
 ## Getting Started
 
-1. Follow the [Flatfile Coding Tutorial](https://flatfile.com/docs/coding-tutorial/overview) for step-by-step instructions
+1. Follow the tutorial for step-by-step instructions
 2. Use the code in each folder as reference or as a starting point
 3. Each folder contains both TypeScript and JavaScript versions for your preference
 

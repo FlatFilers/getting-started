@@ -1,51 +1,36 @@
-# Guide Listeners Code
+# Flatfile Listeners Tutorial Code
 
-This repository contains example code for Flatfile listeners with both TypeScript and JavaScript versions.
+This repository contains companion code for the [Flatfile Coding Tutorial](https://flatfile.com/docs/coding-tutorial/overview), providing working examples that demonstrate how to build powerful data import listeners step by step.
+
+## How This Repository Works
+
+This repository is designed to be used alongside the [Flatfile Coding Tutorial](https://flatfile.com/docs/coding-tutorial/overview). The tutorial progressively walks you through building a complete listener, and this repository provides the corresponding code for each step.
+
+Each folder represents a different stage in the tutorial:
+
+- **`101.01-first-listener/`** - Learn the basics: space configuration and workbook setup
+- **`101.02-adding-validation/`** - Add data validation with real-time feedback
+- **`101.03-adding-actions/`** - Create interactive workflows with submit actions
+
+## Getting Started
+
+1. Follow the [Flatfile Coding Tutorial](https://flatfile.com/docs/coding-tutorial/overview) for step-by-step instructions
+2. Use the code in each folder as reference or as a starting point
+3. Each folder contains both TypeScript and JavaScript versions for your preference
 
 ## Structure
 
-Each example is organized in folders like `101.01-first-listener/` with:
+Each example folder contains:
 
-- `typescript/` - Contains the TypeScript source code
-- `javascript/` - Contains the generated JavaScript code (auto-generated)
+- `typescript/` - TypeScript source code with full type safety
+- `javascript/` - JavaScript version for those preferring vanilla JS
 
-## Tutorial Structure
+## Tutorial Progression
 
-This repository follows the Flatfile Developer Documentation tutorial structure:
+The tutorial teaches you to build a complete data import solution by:
 
-- `101.01-first-listener/` - Basic space configuration and workbook setup
-- `101.02-adding-validation/` - Adding email validation to records  
-- `101.03-adding-actions/` - Adding submit actions and data processing
+1. **Starting simple** - Basic space and workbook configuration
+2. **Adding intelligence** - Email validation and error handling  
+3. **Creating workflows** - Submit actions and data processing
 
-## Scripts
-
-### Generate JavaScript from TypeScript
-
-Use the `scripts/generate-js.ts` script to automatically generate JavaScript versions from TypeScript code:
-
-```bash
-# Generate JavaScript for all projects (only if files have changed)
-bun scripts/generate-js.ts
-
-# Force regenerate all JavaScript files
-bun scripts/generate-js.ts --force
-
-# Generate JavaScript for a specific project
-bun scripts/generate-js.ts 101.01-first-listener
-
-# Show help
-bun scripts/generate-js.ts --help
-```
-
-The script will:
-
-1. Find all folders containing a `typescript/` subdirectory
-2. Compile TypeScript files to JavaScript (excluding `node_modules`)
-3. Copy `package.json`, `package-lock.json`, and `.env.example` to the JavaScript folder
-4. Format the generated JavaScript files (if biome is available)
-5. Only recompile files that are newer than their JavaScript counterparts (unless `--force` is used)
-
-## Requirements
-
-- [Bun](https://bun.sh/) - JavaScript runtime and package manager
-- TypeScript projects should have their dependencies installed in their respective `typescript/` folders
+By the end, you'll have a production-ready listener that can handle real-world data import scenarios.

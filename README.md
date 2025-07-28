@@ -12,6 +12,11 @@ Each folder represents a different stage in the tutorial:
 - **`101.02-adding-validation/`** - Add data validation with real-time feedback
 - **`101.03-adding-actions/`** - Create interactive workflows with submit actions
 
+## Prerequisites
+
+- Basic JavaScript or TypeScript knowledge
+- Node.js and npm installed (latest LTS version recommended)
+
 ## Getting Started
 
 1. Follow the [Flatfile Coding Tutorial](https://flatfile.com/docs/coding-tutorial/overview) for step-by-step instructions

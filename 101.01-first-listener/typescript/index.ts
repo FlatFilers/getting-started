@@ -2,7 +2,7 @@ import type { FlatfileListener } from "@flatfile/listener";
 import api from "@flatfile/api";
 
 export default function (listener: FlatfileListener) {
-  // Configure the space when it's created
+  // Configure the Space when it's created
   listener.on("job:ready", { job: "space:configure" }, async (event) => {
     const { jobId, spaceId } = event.context;
     
@@ -13,7 +13,7 @@ export default function (listener: FlatfileListener) {
         progress: 10
       });
 
-      // Create the workbook with sheets
+      // Create the Workbook with Sheets
       await api.workbooks.create({
         spaceId,
         name: "My Workbook",
@@ -44,12 +44,12 @@ export default function (listener: FlatfileListener) {
       });
 
     } catch (error) {
-      console.error("Error configuring space:", error);
+      console.error("Error configuring Space:", error);
       
       // Fail the job if something goes wrong
       await api.jobs.fail(jobId, {
         outcome: {
-          message: `Failed to configure workspace: ${error.message}`,
+          message: `Failed to configure workspace: ${error instanceof Error ? error.message : 'Unknown error'}`,
           acknowledge: true
         }
       });

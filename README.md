@@ -4,10 +4,18 @@ This repository contains example code for Flatfile listeners with both TypeScrip
 
 ## Structure
 
-Each example is organized in folders like `01-first-listener/` with:
+Each example is organized in folders like `101.01-first-listener/` with:
 
 - `typescript/` - Contains the TypeScript source code
 - `javascript/` - Contains the generated JavaScript code (auto-generated)
+
+## Tutorial Structure
+
+This repository follows the Flatfile Developer Documentation tutorial structure:
+
+- `101.01-first-listener/` - Basic space configuration and workbook setup
+- `101.02-adding-validation/` - Adding email validation to records  
+- `101.03-adding-actions/` - Adding submit actions and data processing
 
 ## Scripts
 
@@ -23,7 +31,7 @@ bun scripts/generate-js.ts
 bun scripts/generate-js.ts --force
 
 # Generate JavaScript for a specific project
-bun scripts/generate-js.ts 01-first-listener
+bun scripts/generate-js.ts 101.01-first-listener
 
 # Show help
 bun scripts/generate-js.ts --help

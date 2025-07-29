@@ -1,11 +1,14 @@
 import { jobHandler } from "@flatfile/plugin-job-handler";
 import api from "@flatfile/api";
 export const submitHandler = jobHandler('workbook:submitActionForeground', async (event, tick) => {
+  
   const { workbookId } = event.context;
   await tick(10, 'Starting data processing...');
+
   // Get the sheets
   const { data: sheets } = await api.sheets.list({ workbookId });
   await tick(30, 'Retrieving records...');
+
   // Get and count the records
   const records = {};
   let recordsCount = 0;
@@ -15,6 +18,7 @@ export const submitHandler = jobHandler('workbook:submitActionForeground', async
     recordsCount += sheetRecords.length;
   }
   await tick(60, `Processing ${sheets.length} sheets with ${recordsCount} records...`);
+
   // Process the data (log to console for now)
   console.log('Processing records:', JSON.stringify(records, null, 2));
   await tick(100, `Successfully processed ${sheets.length} sheets with ${recordsCount} records!`);

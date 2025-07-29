@@ -58,7 +58,7 @@ listener.use(jobHandler('workbook:submitActionForeground', async (event, tick) =
 
 ## Learn More
 
-- [Listeners 102: Adding Plugins](https://flatfile.com/docs/coding-tutorial/102-plugins-and-structure/102.01-adding-plugins)
+- [Listeners 102: Using Plugins](https://flatfile.com/docs/coding-tutorial/102-modularity-and-depth/102.01-using-plugins)
 - [SpaceConfigure Plugin](https://flatfile.com/docs/plugins/space-configure)
 - [JobHandler Plugin](https://flatfile.com/docs/plugins/job-handler)
 - [RecordHook Plugin](https://flatfile.com/docs/plugins/record-hook)

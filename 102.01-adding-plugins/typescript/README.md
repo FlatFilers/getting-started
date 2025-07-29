@@ -16,7 +16,7 @@ This code accomplishes the same functionality as [101.03 Adding Actions](../../.
 - **Automatic error handling** built into Plugins
 - **Built-in progress tracking** with the `tick` function
 - **Batch Record processing** for better performance
-- **Full TypeScript support** with proper type definitions
+
 
 ## Installation
 
@@ -57,16 +57,9 @@ listener.use(jobHandler('workbook:submitActionForeground', async (event, tick) =
 }))
 ```
 
-## TypeScript Benefits
-
-- **Type safety** for Record operations and API calls
-- **IntelliSense support** in your IDE
-- **Compile-time error checking** for Plugin configurations
-- **Better refactoring** support
-
 ## Learn More
 
-- [Listeners 102: Adding Plugins](https://flatfile.com/docs/coding-tutorial/102-plugins-and-structure/102.01-adding-plugins)
+- [Listeners 102: Using Plugins](https://flatfile.com/docs/coding-tutorial/102-modularity-and-depth/102.01-using-plugins)
 - [SpaceConfigure Plugin](https://flatfile.com/docs/plugins/space-configure)
 - [JobHandler Plugin](https://flatfile.com/docs/plugins/job-handler)
 - [RecordHook Plugin](https://flatfile.com/docs/plugins/record-hook)

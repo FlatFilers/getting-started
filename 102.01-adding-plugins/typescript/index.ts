@@ -6,6 +6,7 @@ import api from '@flatfile/api'
 
 export default function (listener: FlatfileListener) {
   // Configure the Space with the SpaceConfigure Plugin
+  // this replaces the code we built in 101.01
   listener.use(
     configureSpace({
       workbooks: [
@@ -36,6 +37,7 @@ export default function (listener: FlatfileListener) {
   )
 
   // Handle email validation with RecordHook Plugin
+  // this replaces the code we added in 101.02
   listener.use(
     bulkRecordHook('contacts', (records) => {
       records.map(record => {
@@ -52,23 +54,23 @@ export default function (listener: FlatfileListener) {
             record.set('email', email)
           }
         }
-        
         return record
       })
     })
   )
 
   // Handle Submit Action with JobHandler Plugin
+  // this replaces the code we added in 101.03
   listener.use(
     jobHandler('workbook:submitActionForeground', async (event, tick) => {
       const { workbookId } = event.context
 
       await tick(10, 'Starting data processing...')
 
-      await tick(30, 'Retrieving records...')
-
       // Get the sheets
       const { data: sheets } = await api.sheets.list({ workbookId })
+
+      await tick(30, 'Retrieving records...')
 
       // Get and count the records
       const records: { [name: string]: any[] } = {}

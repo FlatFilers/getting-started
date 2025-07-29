@@ -1,13 +1,13 @@
 {
   "devDependencies": {
-    "typescript": "^5.8.3",
-    "@types/node": "^22.10.2"
+    "@types/node": "^22.10.2",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
     "@flatfile/api": "^1.20.0",
     "@flatfile/listener": "^1.1.2",
-    "@flatfile/plugin-space-configure": "^1.9.7",
-    "@flatfile/plugin-job-handler": "^1.6.3",
-    "@flatfile/plugin-record-hook": "^1.7.6"
+    "@flatfile/plugin-job-handler": "^0.8.1",
+    "@flatfile/plugin-record-hook": "^2.0.3",
+    "@flatfile/plugin-space-configure": "^0.10.1"
   }
 }

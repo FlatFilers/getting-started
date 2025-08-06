@@ -1,5 +1,5 @@
-import { contactsSheet } from "../sheets/contacts.sheet";
-import { submitAction } from "../actions/submit.action";
+import { contactsSheet } from "../sheets/contacts.sheet.js";
+import { submitAction } from "../actions/submit.action.js";
 
 export const contactsWorkbook = {
   name: 'Contacts',

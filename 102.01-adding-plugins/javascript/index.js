@@ -9,7 +9,7 @@ export default function (listener) {
     configureSpace({
       workbooks: [
         {
-          name: "My Workbook",
+          name: "Contacts",
           sheets: [
             {
               name: "contacts",

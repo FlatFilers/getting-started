@@ -13,7 +13,7 @@ export default function (listener) {
       // Create the Workbook with Sheets
       await api.workbooks.create({
         spaceId,
-        name: "My Workbook",
+        name: "Contacts",
         sheets: [
           {
             name: "contacts",

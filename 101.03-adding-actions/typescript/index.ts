@@ -16,7 +16,7 @@ export default function (listener: FlatfileListener) {
       // Create the Workbook with Sheets and Actions
       await api.workbooks.create({
         spaceId,
-        name: "My Workbook",
+        name: "Contacts",
         sheets: [
           {
             name: "contacts",

@@ -11,7 +11,7 @@ export default function (listener: FlatfileListener) {
     configureSpace({
       workbooks: [
         {
-          name: 'My Workbook',
+          name: 'Contacts',
           sheets: [
             {
               name: 'contacts',

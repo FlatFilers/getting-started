@@ -15,7 +15,7 @@ This code accomplishes the same functionality as [102.01 Using Plugins](../../..
 ```
 ├── blueprints/
 │   ├── workbooks/
-│   │   └── my-workbook.workbook.js
+│   │   └── contacts.workbook.js
 │   ├── sheets/
 │   │   └── contacts.sheet.js
 │   └── actions/
@@ -47,18 +47,23 @@ This Listener code is designed to be deployed to Flatfile. Follow the [deploymen
 ## Code Organization
 
 ### blueprints/
+
 Contains configuration objects that define what your Space looks like:
+
 - **workbooks/**: Workbook definitions with `.workbook.js` extension
-- **sheets/**: Sheet configurations with `.sheet.js` extension  
+- **sheets/**: Sheet configurations with `.sheet.js` extension
 - **actions/**: Action definitions with `.action.js` extension
 
 ### listeners/
+
 Contains behavior functions that define how your Space behaves:
+
 - **Listener files**: Named with `.listener.js` extension
 - **Plugin configurations**: SpaceConfigure, RecordHook, JobHandler
 - **Business logic**: Validation, processing, API calls
 
 ### Naming Conventions
+
 - Configuration files: `name.type.js` (e.g., `contacts.sheet.js`)
 - Listener files: `descriptive-name.listener.js` (e.g., `contacts-hook.listener.js`)
 - Clear, descriptive names that indicate purpose

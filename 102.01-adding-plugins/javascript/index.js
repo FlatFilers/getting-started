@@ -2,9 +2,10 @@ import { configureSpace } from "@flatfile/plugin-space-configure";
 import { jobHandler } from "@flatfile/plugin-job-handler";
 import { bulkRecordHook } from "@flatfile/plugin-record-hook";
 import api from "@flatfile/api";
+
 export default function (listener) {
   // Configure the Space with the SpaceConfigure Plugin
-  // this replaces the code we built in 101.01
+  // this replaces the code we built in 101.01 plus the Action we added in 101.03
   listener.use(
     configureSpace({
       workbooks: [

@@ -10,7 +10,7 @@ export default function (listener) {
         info: "Setting up your workspace...",
         progress: 10,
       });
-      // Create the workbook with sheets
+      // Create the Blueprint for the space
       await api.workbooks.create({
         spaceId,
         name: "Contacts",

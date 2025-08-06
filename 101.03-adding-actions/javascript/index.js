@@ -9,7 +9,7 @@ export default function (listener) {
         info: "Setting up your workspace...",
         progress: 10,
       });
-      // Create the Workbook with Sheets and Actions
+      // Create the Blueprint for the space
       await api.workbooks.create({
         spaceId,
         name: "Contacts",
@@ -52,7 +52,7 @@ export default function (listener) {
         outcome: {
           message: `Failed to configure workspace: ${error.message}`,
           acknowledge: true,
-        },
+        }
       });
     }
   });
@@ -111,7 +111,7 @@ export default function (listener) {
           },
         });
       }
-    },
+    }
   );
   
   // Listen for commits and validate email format
@@ -138,8 +138,7 @@ export default function (listener) {
                   messages: [
                     {
                       type: "error",
-                      message:
-                      "Please enter a valid email address (e.g., user@example.com)",
+                      message: "Please enter a valid email address (e.g., user@example.com)",
                     },
                   ],
                 },

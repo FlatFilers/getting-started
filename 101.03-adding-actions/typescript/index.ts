@@ -1,4 +1,4 @@
-import type { FlatfileListener } from "@flatfile/listener";
+import { FlatfileListener } from "@flatfile/listener";
 import api, { Flatfile } from "@flatfile/api";
 
 export default function (listener: FlatfileListener) {
@@ -13,7 +13,7 @@ export default function (listener: FlatfileListener) {
         progress: 10
       });
 
-      // Create the Workbook with Sheets and Actions
+      // Create the Blueprint for the space
       await api.workbooks.create({
         spaceId,
         name: "Contacts",

@@ -6,7 +6,7 @@ import api from '@flatfile/api'
 
 export default function (listener: FlatfileListener) {
   // Configure the Space with the SpaceConfigure Plugin
-  // this replaces the code we built in 101.01
+  // this replaces the code we built in 101.01 plus the Action we added in 101.03
   listener.use(
     configureSpace({
       workbooks: [

@@ -15,14 +15,14 @@ This code accomplishes the same functionality as [102.01 Using Plugins](../../..
 ```
 ├── blueprints/
 │   ├── workbooks/
-│   │   └── contacts.workbook.js
+│   │   └── people.workbook.js
 │   ├── sheets/
-│   │   └── contacts.sheet.js
+│   │   └── people.sheet.js
 │   └── actions/
 │       └── submit.action.js
 ├── listeners/
 │   ├── configure-space.listener.js
-│   ├── contacts-hook.listener.js
+│   ├── people-hook.listener.js
 │   └── submit-handler.listener.js
 └── index.js
 ```
@@ -64,8 +64,8 @@ Contains behavior functions that define how your Space behaves:
 
 ### Naming Conventions
 
-- Configuration files: `name.type.js` (e.g., `contacts.sheet.js`)
-- Listener files: `descriptive-name.listener.js` (e.g., `contacts-hook.listener.js`)
+- Configuration files: `name.type.js` (e.g., `people.sheet.js`)
+- Listener files: `descriptive-name.listener.js` (e.g., `people-hook.listener.js`)
 - Clear, descriptive names that indicate purpose
 
 ## Learn More

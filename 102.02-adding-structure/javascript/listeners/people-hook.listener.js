@@ -1,6 +1,6 @@
 import { bulkRecordHook } from "@flatfile/plugin-record-hook";
 
-export const contactsHook = bulkRecordHook('contacts', (records) => {
+export const peopleHook = bulkRecordHook('people', (records) => {
 
   records.map(record => {
     

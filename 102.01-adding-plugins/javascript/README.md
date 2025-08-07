@@ -42,7 +42,7 @@ listener.use(configureSpace({
 The `bulkRecordHook` Plugin processes Records in batches for better performance:
 
 ```javascript
-listener.use(bulkRecordHook('contacts', (records) => {
+listener.use(bulkRecordHook('people', (records) => {
   // Process records in batch
 }))
 ```

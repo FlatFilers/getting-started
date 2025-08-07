@@ -19,8 +19,8 @@ export default function (listener: FlatfileListener) {
         name: "Contacts",
         sheets: [
           {
-            name: "contacts",
-            slug: "contacts",
+            name: "People",
+            slug: "people",
             fields: [
               { key: "name", type: "string", label: "Full Name" },
               { key: "email", type: "string", label: "Email" },

@@ -1,8 +1,8 @@
 import { Flatfile } from "@flatfile/api";
 
-export const contactsSheet: Flatfile.SheetConfig = {
-  name: 'contacts',
-  slug: 'contacts',
+export const peopleSheet: Flatfile.SheetConfig = {
+  name: 'People',
+  slug: 'people',
   fields: [
     { key: 'name', type: 'string', label: 'Full Name' },
     { key: 'email', type: 'string', label: 'Email' }

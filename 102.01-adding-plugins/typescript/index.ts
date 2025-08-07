@@ -14,8 +14,8 @@ export default function (listener: FlatfileListener) {
           name: 'Contacts',
           sheets: [
             {
-              name: 'contacts',
-              slug: 'contacts',
+              name: 'People',
+              slug: 'people',
               fields: [
                 { key: 'name', type: 'string', label: 'Full Name' },
                 { key: 'email', type: 'string', label: 'Email' }
@@ -39,7 +39,7 @@ export default function (listener: FlatfileListener) {
   // Handle email validation with RecordHook Plugin
   // this replaces the code we added in 101.02
   listener.use(
-    bulkRecordHook('contacts', (records) => {
+    bulkRecordHook('people', (records) => {
       records.map(record => {
         const emailValue = record.get('email') as string
         

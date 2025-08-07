@@ -15,14 +15,14 @@ This code accomplishes the same functionality as [102.01 Using Plugins](../../..
 ```
 ├── blueprints/
 │   ├── workbooks/
-│   │   └── contacts.workbook.ts
+│   │   └── people.workbook.ts
 │   ├── sheets/
-│   │   └── contacts.sheet.ts
+│   │   └── people.sheet.ts
 │   └── actions/
 │       └── submit.action.ts
 ├── listeners/
 │   ├── configure-space.listener.ts
-│   ├── contacts-hook.listener.ts
+│   ├── people-hook.listener.ts
 │   └── submit-handler.listener.ts
 └── index.ts
 ```
@@ -64,8 +64,8 @@ Contains behavior functions that define how your Space behaves:
 
 ### Naming Conventions
 
-- Configuration files: `name.type.ts` (e.g., `contacts.sheet.ts`)
-- Listener files: `descriptive-name.listener.ts` (e.g., `contacts-hook.listener.ts`)
+- Configuration files: `name.type.ts` (e.g., `people.sheet.ts`)
+- Listener files: `descriptive-name.listener.ts` (e.g., `people-hook.listener.ts`)
 - Clear, descriptive names that indicate purpose
 
 ## Learn More

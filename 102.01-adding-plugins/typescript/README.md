@@ -43,7 +43,7 @@ listener.use(configureSpace({
 The `bulkRecordHook` Plugin processes Records in batches for better performance:
 
 ```typescript
-listener.use(bulkRecordHook('contacts', (records) => {
+listener.use(bulkRecordHook('people', (records) => {
   // Process records in batch with TypeScript types
 }))
 ```

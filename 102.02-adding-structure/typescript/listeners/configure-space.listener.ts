@@ -1,6 +1,6 @@
 import { configureSpace } from "@flatfile/plugin-space-configure";
-import { peopleWorkbook } from "../blueprints/workbooks/people.workbook";
+import { contactsWorkbook } from "../blueprints/workbooks/contacts.workbook";
 
 export const spaceConfig = configureSpace({
-  workbooks: [peopleWorkbook],
+  workbooks: [contactsWorkbook],
 });
